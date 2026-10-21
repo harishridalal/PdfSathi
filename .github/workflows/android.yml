@@ -15,11 +15,11 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Extract current project ZIP
+      - name: Extract project ZIP
         run: |
-          test -f PDFSaathiAndroid_v0.3.zip
+          test -f PDFSaathiAndroid_v0.5.zip
           rm -rf PDFSaathiAndroid
-          unzip -q PDFSaathiAndroid_v0.3.zip
+          unzip -q PDFSaathiAndroid_v0.5.zip
           test -f PDFSaathiAndroid/app/build.gradle.kts
           test -f PDFSaathiAndroid/app/src/main/java/com/pdfsaathi/app/MainActivity.kt
 
@@ -29,11 +29,11 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Install Android SDK packages
+      - name: Install required Android SDK packages
         run: |
-          SDK_ROOT="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
+          SDK_ROOT="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
           SDKMANAGER="$(find "$SDK_ROOT/cmdline-tools" -type f -name sdkmanager | head -n 1)"
-          if [ -z "$SDKMANAGER" ]; then echo "Could not locate sdkmanager" >&2; exit 1; fi
+          if [ -z "$SDKMANAGER" ]; then echo "Could not locate sdkmanager under $SDK_ROOT" >&2; exit 1; fi
           yes | "$SDKMANAGER" --licenses >/dev/null || true
           "$SDKMANAGER" --install "platforms;android-35" "build-tools;35.0.0" "platform-tools"
 
