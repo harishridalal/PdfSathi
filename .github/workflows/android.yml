@@ -15,11 +15,11 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Extract project ZIP
+      - name: Extract current project ZIP
         run: |
-          test -f PDFSaathiAndroid_v0.5.zip
+          test -f PDFSaathiAndroid_v0.6.zip
           rm -rf PDFSaathiAndroid
-          unzip -q PDFSaathiAndroid_v0.5.zip
+          unzip -q PDFSaathiAndroid_v0.6.zip
           test -f PDFSaathiAndroid/app/build.gradle.kts
           test -f PDFSaathiAndroid/app/src/main/java/com/pdfsaathi/app/MainActivity.kt
 
@@ -29,7 +29,7 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Install required Android SDK packages
+      - name: Install Android SDK packages
         run: |
           SDK_ROOT="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
           SDKMANAGER="$(find "$SDK_ROOT/cmdline-tools" -type f -name sdkmanager | head -n 1)"
